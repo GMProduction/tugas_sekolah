@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tk Aisyah</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
@@ -35,65 +36,23 @@
             </a>
 
 
-
-            <a href="/admin">
+            
+            <a href="/guru/materi">
                 <li href="#" class="nav-link t-white">
-                    <i class="bx bxs-dashboard"></i>
-                    <span class="mx-2">Dashboard</span>
+                    <i class='bx bx-book-bookmark'></i>
+                    <span class="mx-2">Materi</span>
                 </li>
             </a>
 
-            <a href="/admin/produk">
+            <a href="/guru/tugas">
                 <li href="#" class="nav-link t-white">
-                    <i class="bx bxs-cube"></i>
-                    <span class="mx-2">Master Produk</span>
+                    <i class='bx bx-edit-alt'></i>
+                    <span class="mx-2">Tugas</span>
                 </li>
             </a>
 
-
-            <a href="/admin/pelanggan">
-                <li href="#" class="nav-link t-white">
-                    <i class="bx bxs-group"></i>
-                    <span class="mx-2">Data Pelanggan</span>
-                </li>
-
-            </a>
-
-
-            <a href="/admin/pesanan">
-                <li href="#" class="nav-link t-white">
-                    <i class="bx bxs-file"></i>
-                    <span class="mx-2">Data Pesanan</span>
-                </li>
-
-            </a>
-            <a href="/admin/admin">
-                <li href="#" class="nav-link t-white">
-                    <i class='bx bx-user-voice'></i>
-                    <span class="mx-2">Data Admin</span>
-                </li>
-            </a>
-
-            <a href="/admin/guru">
-                <li href="#" class="nav-link t-white">
-                    <i class='bx bxs-user-check'></i>
-                    <span class="mx-2">Data Guru</span>
-                </li>
-            </a>
-
-            <a href="/admin/siswa">
-                <li href="#" class="nav-link t-white">
-                    <i class='bx bxs-face'></i>
-                    <span class="mx-2">Data Siswa</span>
-                </li>
-            </a>
-            <a href="/admin/absensi">
-                <li href="#" class="nav-link t-white">
-                    <i class='bx bx-clipboard'></i>
-                    <span class="mx-2">Data Absensi</span>
-                </li>
-            </a>
-
+        
+            
             <a href="/logout" class="mt-auto">
                 <li href="#" class="nav-link t-white">
                     <i class="bx bx-link-external"></i>

@@ -9,4 +9,9 @@ class Sholat extends Model
 {
     use HasFactory;
     protected $table = 'sholat';
+
+    protected $fillable = [
+        'nama',
+        'aktivitas_id',
+    ];
 }

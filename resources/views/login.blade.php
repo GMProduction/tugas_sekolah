@@ -15,14 +15,14 @@
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}" type="text/css">
- 
+
     <!-- Styles -->
- 
+
 </head>
 
 
 <body>
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
@@ -42,7 +42,7 @@
 						<span class="d-block mt-2">New to HI UDB? <a class="ms-2 link" href="/register-page">Create an account.</a></span>
 					</form>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,7 +98,7 @@ Route::get('/admin/pesanan', function () {
 
 
 
-//Route::post('/register',[AuthController::class,'register']);
+Route::post('/register',[AuthController::class,'register']);
 //
 //Route::get('/barang', [BarangController::class, 'index']);
 //Route::post('/barang', [BarangController::class, 'createProduct']);

@@ -53,6 +53,20 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'fileTugas' => [
+            'driver' => 'local',
+            'root' => public_path() . '/files/tugas',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'imageUser' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images/user',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

@@ -10,6 +10,14 @@ class Aktivitas extends Model
     use HasFactory;
     protected $table = 'aktivitas';
 
+    protected $fillable = [
+        'user_id',
+        'tanggal',
+        'surat',
+    ];
+
+    protected $with = 'sholat';
+
     public function sholat()
     {
         return $this->hasMany(Sholat::class, 'aktivitas_id');
