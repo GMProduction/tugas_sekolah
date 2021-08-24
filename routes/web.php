@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AbsensiController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\GuruMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,90 +21,61 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect('/login');
 });
 
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/login', [AuthController::class,'login']);
+Route::get('/logout', [AuthController::class,'logout']);
 
 Route::get('/register-page', function () {
     return view('registerPage');
 });
+Route::post('/register-page', [AuthController::class, 'registerMember']);
 
-Route::get('/detail', function () {
-    return view('detail');
+
+
+
+
+Route::prefix('/admin')->middleware(AdminMiddleware::class)->group(function (){
+    Route::get('/', function () {
+        return view('admin/dashboard');
+    });
+    Route::get('/data-admin', [AdminController::class,'index']);
+    Route::post('/data-admin', [AuthController::class, 'register']);
+    Route::get('/data-admin/{id}/delete', [AdminController::class, 'delete']);
+
+    Route::get('/guru', [GuruController::class, 'index']);
+    Route::post('/guru', [AuthController::class, 'register']);
+
+    Route::prefix('/siswa')->group(function (){
+        Route::match(['POST','GET'],'/', [SiswaController::class, 'index']);
+        Route::get('/{id}', [SiswaController::class, 'detail']);
+    });
+
+    Route::prefix('/absensi')->group(function (){
+        Route::match(['post','get'],'/', [AbsensiController::class, 'index']);
+        Route::get('/{id}', [AbsensiController::class,'detail']);
+    });
 });
 
-Route::get('/custom', function () {
-    return view('detail-custom');
-});
-
-Route::get('/kategori', function () {
-    return view('kategori');
-});
-
-Route::get('/user', function () {
-    return view('user/dashboard');
-});
-
-
-
-Route::get('/user/keranjang', function () {
-    return view('user/keranjang');
-});
-
-Route::get('/user/pembayaran', function () {
-    return view('user/pembayaran');
-});
-
-
-Route::get('/user/menunggu', function () {
-    return view('user/menunggu');
-});
-
-Route::get('/user/proses', function () {
-    return view('user/proses-desain');
-});
-
-Route::get('/user/pengiriman', function () {
-    return view('user/pengiriman');
-});
-
-Route::get('/user/selesai', function () {
-    return view('user/selesai');
-});
-
-Route::get('/user/profil', function () {
-    return view('user/profil');
-});
-
-
-Route::get('/user/profil', function () {
-    return view('user/profil');
-});
-
-
-Route::get('/admin', function () {
-    return view('admin/dashboard');
-});
-
-Route::get('/admin/produk', function () {
-    return view('admin/produk/produk');
-});
-
-Route::get('/admin/pelanggan', function () {
-    return view('admin/pelanggan/pelanggan');
-});
-
-Route::get('/admin/pesanan', function () {
-    return view('admin/pesanan/pesanan');
+Route::prefix('/guru')->middleware(GuruMiddleware::class)->group(function (){
+    Route::get('/',[\App\Http\Controllers\Guru\DashboardController::class,'index']);
+    Route::get('/profile',[\App\Http\Controllers\Guru\ProfileController::class,'index']);
+    Route::post('/profile',[AuthController::class,'register']);
+    Route::post('/profile/update-image',[\App\Http\Controllers\Guru\ProfileController::class,'updateImage']);
+    Route::match(['post','get'],'/materi',[\App\Http\Controllers\Guru\MateriController::class,'index']);
+    Route::get('/materi/{id}/delete',[\App\Http\Controllers\Guru\MateriController::class, 'delete']);
+    Route::match(['post','get'],'/tugas',[\App\Http\Controllers\Guru\TugasController::class,'index']);
+    Route::get('/tugas/{id}',[\App\Http\Controllers\Guru\TugasController::class,'detail']);
+    Route::post('/tugas/nilai/{id}',[\App\Http\Controllers\Guru\TugasController::class,'updateNilai']);
 });
 
 
 
-
-Route::post('/register',[AuthController::class,'register']);
+//Route::post('/register',[AuthController::class,'register']);
 //
 //Route::get('/barang', [BarangController::class, 'index']);
 //Route::post('/barang', [BarangController::class, 'createProduct']);

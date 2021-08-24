@@ -30,10 +30,14 @@ class APITugasController extends CustomController
                 'url'      => 'required',
             ]
         );
+        $tugas = Tugas::find($id);
+        $files     = $this->request->file('url');
+        $extension = $files->getClientOriginalExtension();
+        $name      = $tugas->nama.'-'.\auth()->user()->nama.'-'.\auth()->user()->username;
+        $value     = $name.'.'.$extension;
 
-        $file      = $this->generateImageName('url');
-        $stringImg = '/files/tugas/'.$file;
-        $this->uploadImage('url', $file, 'fileTugas');
+        $stringImg = '/files/tugas/'.$value;
+        $this->uploadImage('url', $value, 'fileTugas');
 
         $nilai = Nilai::where([['tugas_id','=',$id],['user_id','=',Auth::id()]])->first();
         if ($nilai){

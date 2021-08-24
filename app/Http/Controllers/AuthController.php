@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\CustomController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class AuthController extends CustomController
 {
     //
     public function register()
@@ -115,5 +117,38 @@ class AuthController extends Controller
                 'msg'    => $token,
             ]
         );
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function login()
+    {
+        $credentials = [
+            'username' => \request('username'),
+            'password' => \request('password'),
+        ];
+        if ($this->isAuth($credentials)) {
+            $redirect = '/';
+
+            if (Auth::user()->roles === 'admin') {
+                $redirect = '/admin';
+            }elseif(Auth::user()->roles === 'guru'){
+                $redirect = '/guru';
+            }
+
+            return redirect($redirect);
+        }
+        return redirect()->back()->withInput()->with('failed', 'Periksa Kembali Username dan Password Anda');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/');
     }
 }

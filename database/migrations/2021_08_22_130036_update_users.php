@@ -17,10 +17,10 @@ class UpdateUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->string('roles');
-            $table->string('nama');
-            $table->text('alamat');
-            $table->string('no_hp');
-            $table->date('tanggal_lahir');
+            $table->string('nama')->nullable(true)->default(null);
+            $table->text('alamat')->nullable(true)->default(null);
+            $table->string('no_hp')->nullable(true)->default(null);
+            $table->date('tanggal_lahir')->nullable(true)->default(null);
             $table->text('image')->nullable(true)->default(null);
             $table->text('token')->nullable(true)->default(null);
         });

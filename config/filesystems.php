@@ -60,9 +60,30 @@ return [
             'visibility' => 'public',
         ],
 
+        'fileTugasGuru' => [
+            'driver' => 'local',
+            'root' => public_path() . '/files/tugas_guru',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'fileMeteri' => [
+            'driver' => 'local',
+            'root' => public_path() . '/files/materi',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
         'imageUser' => [
             'driver' => 'local',
             'root' => public_path() . '/images/user',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'imageProfile' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images/profile',
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],

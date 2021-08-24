@@ -51,7 +51,6 @@ class APIAktivitasController extends Controller
 
             }else{
                 $aktivitas = Aktivitas::create($field);
-                $aktivitas->sholat()->createMany($data);
             }
 
             if ($sholat){

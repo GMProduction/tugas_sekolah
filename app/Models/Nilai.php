@@ -23,4 +23,8 @@ class Nilai extends Model
     public function tugas(){
         return $this->belongsTo(Tugas::class, 'tugas_id');
     }
+
+    public function siswa(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

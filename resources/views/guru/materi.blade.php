@@ -20,48 +20,34 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5>Data Materi</h5>
-                <button type="button ms-auto" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#tambahdata">Tambah Materi</button>
+                <a class="btn btn-primary btn-sm" id="addData">Tambah Materi</a>
             </div>
-
 
             <table class="table table-striped table-bordered ">
                 <thead>
-                    <th>
-                        #
-                    </th>
-
-                    <th>
-                        Nama Materi
-                    </th>
-
-                    <th>
-                        Tanggal
-                    </th>
-
-                    <th>
-                        Action
-                    </th>
-
-                </thead>
-
                 <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        Matematika Dasar
-                    </td>
-                    <td>
-                        20-08-2020
-                    </td>
-                  
-                    <td>
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#tambahdata">Ubah</button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="hapus('id', 'nama') ">hapus</button>
-                    </td>
+                    <th>#</th>
+                    <th>Nama Materi</th>
+                    <th>Tanggal</th>
+                    <th>Action</th>
                 </tr>
+                </thead>
+                @forelse($data as $key => $d)
+                    <tr>
+                        <td>{{$key + 1}}</td>
+                        <td>{{$d->nama}}</td>
+                        <td>{{date('d F Y', strtotime($d->created_at))}}</td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" id="editData" data-deskripsi="{{$d->deskripsi}}" data-video="{{$d->url_video}}" data-id="{{$d->id}}" data-nama="{{$d->nama}}">Ubah
+                            </a>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus('{{$d->id}}', '{{$d->nama}}') ">hapus</button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="text-center">Tidak ada data</td>
+                    </tr>
+                @endforelse
 
             </table>
 
@@ -71,7 +57,7 @@
 
 
         <!-- Modal Tambah-->
-        <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -79,24 +65,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form onsubmit="return saveMateri()" id="formTugas" enctype="multipart/form-data">
+                            @csrf
+                            <input id="id" name="id" hidden>
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Materi</label>
-                                <input type="text" class="form-control" id="nama">
+                                <label for="nama" class="form-label">Nama materi</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
-
                             <div class="mb-3">
-                                    <label for="materi" class="form-label">Materi</label>
-                                    <input type="file" class="form-control" id="materi" name="materi" required>
-                                    
-                                </div>
-
+                                <label for="url_video" class="form-label">Video</label>
+                                <input type="file" class="form-control" id="url_video" name="url_video" accept="video/*">
+                                <div id="showVideo" class="mt-2"></div>
+                            </div>
                             <div class="mb-3">
-                                    <label for="deskripsiEvent" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-                                </div>
-
-                       
+                                <label for="nama" class="form-label">Deskripsi</label>
+                                <textarea class="form-control" name="deskripsi" id="deskripsi" required></textarea>
+                            </div>
                             <div class="mb-4"></div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
@@ -117,23 +101,32 @@
 
         })
 
+        $(document).on('click','#addData, #editData', function () {
+            $('#tambahData #id').val($(this).data('id'));
+            $('#tambahData #nama').val($(this).data('nama'));
+            $('#tambahData #deskripsi').val($(this).data('deskripsi'));
+            $('#tambahData #url_video').val('').attr('required','');
+
+            if($(this).data('id')){
+                $('#tambahData #url_video').removeAttr('required');
+                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="http://localhost:8002'+$(this).data('video')+'"></video>')
+            }
+            $('#tambahData').modal('show');
+        });
+
+        function aftersave() {
+
+        }
+        $('#tambahData').on('hidden.bs.modal', function () {
+            $('#tambahData #showVideo video').remove()
+        });
+        function saveMateri() {
+            saveData('Simpan Tugas','formTugas');
+            return false;
+        }
         function hapus(id, name) {
-            swal({
-                    title: "Menghapus data?",
-                    text: "Apa kamu yakin, ingin menghapus data ?!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Berhasil Menghapus data!", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Data belum terhapus");
-                    }
-                });
+            deleteData(name,'/guru/materi/'+id+'/delete');
+           return false;
         }
     </script>
 

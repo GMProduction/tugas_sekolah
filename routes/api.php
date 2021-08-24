@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\APIAbsensiController;
 use App\Http\Controllers\API\APIAktivitasController;
 use App\Http\Controllers\API\APIMateriController;
 use App\Http\Controllers\API\APINilaiController;
@@ -47,4 +48,6 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
     Route::post('/profile',[AuthController::class,'register']);
     Route::post('/profile/update-image',[APIProfileController::class,'updateImage']);
 
+    Route::get('/absensi',[APIAbsensiController::class,'index']);
+    Route::post('/absensi/{id}',[APIAbsensiController::class,'absen']);
 });
