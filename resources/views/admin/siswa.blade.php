@@ -103,32 +103,15 @@
                             <div class="col-8">
 
                                 <p class="mb-0">Absensi</p>
-                                <p style="font-size: 1.2rem; font-weight: bold">100%</p>
+                                <p style="font-size: 1.2rem; font-weight: bold" id="absensPersen"></p>
 
                                 <p class="mb-0 mt-3">Perkembangan Nilai</p>
 
-                                <br>
-                                <br>
-                                <br>
+                                <div id="linechart_material"></div>
 
                                 <p class="mb-0 mt-3">Tabel Sholat</p>
 
-                                <table class="table table-striped table-bordered ">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tanggal</th>
-                                        <th>Hafalan Surat</th>
-                                        <th>Sholat</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="tbAktivitas">
-                                    <tr>
-                                        <td class="text-center" colspan="4">Tidak ada data</td>
-                                    </tr>
-                                    </tbody>
 
-                                </table>
 
                             </div>
                             <div class="col-4" style="position: relative">
@@ -144,6 +127,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="overflow-auto" style="height: 300px">
+                            <table class="table table-striped table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tanggal</th>
+                                    <th>Hafalan Surat</th>
+                                    <th>Sholat</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbAktivitas">
+                                <tr>
+                                    <td class="text-center" colspan="4">Tidak ada data</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
 
                 </div>
@@ -156,10 +157,40 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         $(document).ready(function () {
 
         })
+
+        google.charts.load('current', {'packages':['line']});
+
+        function drawChart(chart_data) {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Tugas');
+            data.addColumn('number', 'Nilai');
+
+            $.each(chart_data, function (i, val) {
+                var nilai = parseInt(val['nilai']);
+                var month = parseInt(i + 1);
+                console.log(month);
+                console.log(nilai);
+                data.addRows([[month, nilai]]);
+            });
+            var options = {
+                width: '100%',
+                height: 300,
+                chartArea: {
+                    // leave room for y-axis labels
+                    width: '88%'
+                },
+            };
+
+            var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+            chart.draw(data, google.charts.Line.convertOptions(options));
+        }
 
         function save() {
             saveData('Tambah Data Siswa', 'form')
@@ -178,9 +209,11 @@
                 $('#nama').html(data['nama'] ?? '')
                 $('#no_hp').html(data['no_hp'] ?? '')
                 $('#alamat').html(data['alamat'] ?? '')
+                $('#absensPersen').html(data['absensi']+' %')
                 $('#tanggal').html(data['tanggal_lahir'] ? moment(data['tanggal_lahir']).format('DD MMMM YYYY') : '')
                 var tabel = $('#tbAktivitas');
-
+                console.log(data)
+                drawChart(data['nilai']);
                 var aktivitas = data['aktivitas'];
                 if (aktivitas){
                     tabel.empty();

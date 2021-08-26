@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
+use App\Models\AbsensiSiswa;
+use App\Models\Nilai;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class SiswaController extends Controller
@@ -30,6 +34,13 @@ class SiswaController extends Controller
 
     public function detail($id){
         $siswa = User::with('aktivitas')->find($id);
+        $absensi = Absensi::count('*');
+        $absensiSiswa = AbsensiSiswa::where('user_id','=',$id)->count('*');
+        $total = ((double) $absensiSiswa / (double) $absensi) * 100;
+        $nilai = Nilai::where('user_id','=',$id)->latest()->get();
+        Arr::set($siswa, 'absensi',$total);
+        Arr::set($siswa, 'nilai',$nilai);
+
         return $siswa;
     }
 }

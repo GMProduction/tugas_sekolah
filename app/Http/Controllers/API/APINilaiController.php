@@ -14,7 +14,7 @@ class APINilaiController extends CustomController
 
     public function index()
     {
-        $nilai = Nilai::where('user_id', '=', Auth::id())->get();
+        $nilai = Nilai::with('tugas')->where('user_id', '=', Auth::id())->get();
 
         return $nilai;
     }

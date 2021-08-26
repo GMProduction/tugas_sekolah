@@ -50,4 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     Route::get('/absensi',[APIAbsensiController::class,'index']);
     Route::post('/absensi/{id}',[APIAbsensiController::class,'absen']);
+
+    Route::get('/nilai',[APINilaiController::class,'index']);
+
 });

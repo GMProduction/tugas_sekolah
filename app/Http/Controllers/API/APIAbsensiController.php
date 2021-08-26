@@ -13,7 +13,7 @@ class APIAbsensiController extends Controller
     //
 
     public function index(){
-        $absen = Absensi::with('absenku')->get();
+        $absen = Absensi::with('absenku')->where('tanggal','=',date('Y-m-d',strtotime(now('Asia/Jakarta'))))->get();
         return $absen;
     }
 
