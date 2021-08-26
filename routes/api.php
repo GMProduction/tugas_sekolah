@@ -34,6 +34,7 @@ Route::post('/login',[AuthController::class,'loginApp']);
 
 Route::group(['middleware' => ['auth:sanctum']],function () {
     Route::get('/tugas', [APITugasController::class, 'index']);
+    Route::get('/tugas-now', [APITugasController::class, 'showNow']);
     Route::get('/tugas/{id}', [APITugasController::class, 'show']);
     Route::post('/tugas/{id}', [APITugasController::class, 'store']);
 
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
     Route::post('/aktivitas/store',[APIAktivitasController::class, 'store']);
 
     Route::get('/materi',[APIMateriController::class, 'index']);
+    Route::get('/materi-now',[APIMateriController::class, 'showNow']);
     Route::get('/materi/{id}',[APIMateriController::class, 'show']);
 
     Route::get('/profile',[APIProfileController::class,'index']);

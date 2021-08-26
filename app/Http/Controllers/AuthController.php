@@ -86,7 +86,7 @@ class AuthController extends CustomController
 
         $user = User::where('username', $field['username'])->first();
         if ( ! $user || ! Hash::check($field['password'], $user->password)) {
-            if ($user->roles != 'user') {
+            if (Auth::user() && $user->roles != 'user') {
                 return response()->json(
                     [
                         'msg' => 'Silahkan login menggunakan akun siswa',
@@ -131,9 +131,9 @@ class AuthController extends CustomController
         if ($this->isAuth($credentials)) {
             $redirect = '/';
 
-            if (Auth::user()->roles === 'admin') {
+            if (Auth::user() && Auth::user()->roles === 'admin') {
                 $redirect = '/admin';
-            }elseif(Auth::user()->roles === 'guru'){
+            }elseif(Auth::user() && Auth::user()->roles === 'guru'){
                 $redirect = '/guru';
             }
 

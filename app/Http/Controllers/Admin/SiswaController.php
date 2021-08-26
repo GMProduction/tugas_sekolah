@@ -37,8 +37,8 @@ class SiswaController extends Controller
         $absensi = Absensi::count('*');
         $absensiSiswa = AbsensiSiswa::where('user_id','=',$id)->count('*');
         $total = ((double) $absensiSiswa / (double) $absensi) * 100;
-        $nilai = Nilai::where('user_id','=',$id)->latest()->get();
-        Arr::set($siswa, 'absensi',$total);
+        $nilai = Nilai::with('tugas')->where('user_id','=',$id)->latest()->get();
+        Arr::set($siswa, 'absensi',(int)$total);
         Arr::set($siswa, 'nilai',$nilai);
 
         return $siswa;

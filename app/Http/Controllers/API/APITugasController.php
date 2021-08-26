@@ -18,6 +18,11 @@ class APITugasController extends CustomController
         return $tugas;
     }
 
+    public function showNow(){
+        $tugas = Tugas::with('nilaiSiswa')->whereBetween('created_at',[date('Y-m-d 00:00:00',strtotime(now('Asia/Jakarta'))),date('Y-m-d 23:59:59',strtotime(now('Asia/Jakarta')))])->get();
+        return $tugas;
+    }
+
     public function show($id){
         $tugas = Tugas::with('nilaiSiswa')->find($id);
         return $tugas;

@@ -168,23 +168,23 @@
         function drawChart(chart_data) {
 
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Tugas');
+            data.addColumn('string', 'Tugas');
             data.addColumn('number', 'Nilai');
 
             $.each(chart_data, function (i, val) {
                 var nilai = parseInt(val['nilai']);
-                var month = parseInt(i + 1);
+                var month = moment(val['tugas']['created_at']).format('DD MMMM');
                 console.log(month);
                 console.log(nilai);
                 data.addRows([[month, nilai]]);
             });
             var options = {
-                width: '100%',
+                width: 650,
                 height: 300,
-                chartArea: {
-                    // leave room for y-axis labels
-                    width: '88%'
-                },
+                // chartArea: {
+                //     // leave room for y-axis labels
+                //     width: '100%'
+                // },
             };
 
             var chart = new google.charts.Line(document.getElementById('linechart_material'));

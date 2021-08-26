@@ -22,11 +22,12 @@ function saveData(title, form, url, resposeSuccess) {
                     },
                     success: function (data, textStatus, xhr) {
                         console.log(data);
-                        $('#progressbar').remove();
 
                         if (xhr.status === 200) {
                             swal("Berhasil", {
                                 icon: "success",
+                                buttons: false,
+                                timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
                                     resposeSuccess()
@@ -66,10 +67,13 @@ function saveData(title, form, url, resposeSuccess) {
                     complete: function (xhr, textStatus) {
                         console.log(xhr.status);
                         console.log(textStatus);
+                        $('#progressbar').remove();
+
                     },
                     error: function (error, xhr, textStatus) {
                         // console.log("LOG ERROR", error.responseJSON.errors);
                         // console.log("LOG ERROR", error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0]);
+                        $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
@@ -106,6 +110,8 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
                         if (xhr.status === 200) {
                             swal("Data Updated ", {
                                 icon: "success",
+                                buttons: false,
+                                timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
                                     resposeSuccess()
@@ -166,6 +172,8 @@ function deleteData(text, url, resposeSuccess) {
                         if (xhr.status === 200) {
                             swal("Data Deleted ", {
                                 icon: "success",
+                                buttons: false,
+                                timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
                                     resposeSuccess()
