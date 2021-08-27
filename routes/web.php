@@ -53,6 +53,7 @@ Route::prefix('/admin')->middleware(AdminMiddleware::class)->group(function (){
     Route::prefix('/siswa')->group(function (){
         Route::match(['POST','GET'],'/', [SiswaController::class, 'index']);
         Route::get('/{id}', [SiswaController::class, 'detail']);
+        Route::get('/{id}/tugas', [SiswaController::class,'tugas']);
     });
 
     Route::prefix('/absensi')->group(function (){

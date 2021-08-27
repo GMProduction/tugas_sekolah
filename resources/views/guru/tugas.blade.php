@@ -61,7 +61,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Joko</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tugas</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -107,6 +107,7 @@
                                         <th>NIS</th>
                                         <th>Nama Siswa</th>
                                         <th>Nilai</th>
+                                        <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -130,6 +131,10 @@
                                             <div class="mb-3">
                                                 <label for="nilai" class="form-label">Nilai</label>
                                                 <input type="number" class="form-control" id="nilai" name="nilai" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="keterangan" class="form-label">Keterangan</label>
+                                                <textarea id="keterangan" name="keterangan" class="form-control"></textarea>
                                             </div>
 
                                             <div class="mb-4"></div>
@@ -187,15 +192,17 @@
                 tabel.empty();
                 $.each(data, function (key, value) {
                     var nilai = value['nilai'] ?? '';
+                    var keterangan = value['keterangan'] ?? '';
                     var nama = value['siswa']['nama'] ?? '';
                     tabel.append('<tr>\n' +
                         '        <td>' + parseInt(key + 1) + '</td>\n' +
                         '        <td>' + value['siswa']['username'] + '</td>\n' +
                         '        <td>' + nama + '</td>\n' +
                         '        <td>' + nilai + '</td>\n' +
-                        '        <td>\n' +
+                        '        <td>' + keterangan + '</td>\n' +
+                        '        <td style="width: 230px">\n' +
                         '          <a class="btn btn-success btn-sm" id="showFile" target="_blank" data-url="' + value['url'] + '">Lihat Hasil Tugas</a>\n' +
-                        '          <a type="button" class="btn btn-warning btn-sm" id="showNilai" data-nilai="' + nilai + '" data-nama="' + nama + '" data-id="' + value['id'] + '">Beri Nilai</a>\n' +
+                        '          <a type="button" class="btn btn-warning btn-sm" id="showNilai" data-nilai="' + nilai + '" data-keterangan="'+keterangan+'" data-nama="' + nama + '" data-id="' + value['id'] + '">Beri Nilai</a>\n' +
                         '         </td>\n' +
                         '         </tr>')
                 })
@@ -211,6 +218,7 @@
             idNilai = $(this).data('id');
             $('#berinilai #nama').html($(this).data('nama'));
             $('#berinilai #nilai').val($(this).data('nilai'));
+            $('#berinilai #keterangan').val($(this).data('keterangan'));
             $('#berinilai').modal('show')
         })
 

@@ -12,19 +12,22 @@ class Nilai extends Model
     protected $table = 'nilai';
 
     protected $fillable = [
-      'user_id',
-      'tugas_id',
-      'url',
-      'nilai'
+        'user_id',
+        'tugas_id',
+        'url',
+        'nilai',
+        'keterangan',
     ];
 
 //    protected $with = 'getTugas';
 
-    public function tugas(){
+    public function tugas()
+    {
         return $this->belongsTo(Tugas::class, 'tugas_id');
     }
 
-    public function siswa(){
-        return $this->belongsTo(User::class,'user_id');
+    public function siswa()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
