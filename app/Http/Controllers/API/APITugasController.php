@@ -14,7 +14,7 @@ class APITugasController extends CustomController
     //
 
     public function index(){
-        $tugas = Tugas::with('nilaiSiswa')->get();
+        $tugas = Tugas::with('nilaiSiswa')->where('nama','like','%'.\request('nama').'%')->get();
         return $tugas;
     }
 
