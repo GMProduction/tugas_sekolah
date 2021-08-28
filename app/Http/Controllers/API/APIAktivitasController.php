@@ -27,11 +27,11 @@ class APIAktivitasController extends Controller
 
     public function store(){
         $field = \request()->validate([
-           'tanggal' => 'required',
            'surat' => 'required'
         ]);
 
         Arr::set($field, 'user_id', Auth::id());
+        Arr::set($field, 'tanggal', now('Asia/Jakarta'));
 
         $sholat = \request('sholat');
         $data = [];

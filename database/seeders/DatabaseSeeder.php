@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,15 +22,8 @@ class DatabaseSeeder extends Seeder
             'roles' => 'admin',
             'alamat' => 'solo',
             'no_hp' => '0123456',
+            'tanggal_lahir' => '1995-02-02',
             'password' => Hash::make('admin'),
-        ]);
-        DB::table('users')->insert([
-            'nama' => 'Petugas',
-            'username' => 'petugas',
-            'roles' => 'petugas',
-            'alamat' => 'solo',
-            'no_hp' => '0123456',
-            'password' => Hash::make('petugas'),
         ]);
     }
 }

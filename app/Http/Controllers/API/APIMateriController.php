@@ -10,7 +10,7 @@ class APIMateriController extends Controller
 {
     //
     public function index(){
-        $materi = Materi::all();
+        $materi = Materi::where('nama','like','%'.\request('nama').'%')->get();
         return $materi;
     }
 
