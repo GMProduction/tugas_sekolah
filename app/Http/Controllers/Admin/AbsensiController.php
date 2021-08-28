@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use App\Models\AbsensiSiswa;
+use App\Models\Nilai;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isReadable;
 
@@ -34,4 +35,6 @@ class AbsensiController extends Controller
         $absen = AbsensiSiswa::with('siswa')->where('absensi_id','=',$id)->get();
         return $absen;
     }
+
+
 }

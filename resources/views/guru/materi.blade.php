@@ -61,7 +61,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Materi</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Materi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -106,7 +106,6 @@
             $('#tambahData #nama').val($(this).data('nama'));
             $('#tambahData #deskripsi').val($(this).data('deskripsi'));
             $('#tambahData #url_video').val('').attr('required','');
-
             if($(this).data('id')){
                 let video = $(this).data('video');
                 $('#tambahData #url_video').removeAttr('required');

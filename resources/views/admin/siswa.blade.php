@@ -49,6 +49,7 @@
                         <td>{{$d->tanggal_lahir}}
                         <td>
                             <a class="btn btn-success btn-sm" id="detailData" data-id="{{$d->id}}">Detail</a>
+                            <a class="btn btn-warning btn-sm" id="tugasData"  href="/admin/siswa/{{$d->id}}/tugas" data-id="{{$d->id}}">Tugas</a>
                         </td>
                     </tr>
                 @empty
