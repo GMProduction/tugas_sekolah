@@ -108,8 +108,9 @@
             $('#tambahData #url_video').val('').attr('required','');
 
             if($(this).data('id')){
+                let video = $(this).data('video');
                 $('#tambahData #url_video').removeAttr('required');
-                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="http://localhost:8002'+$(this).data('video')+'"></video>')
+                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="'+window.location.origin+'/'+$(this).data('video')+'"></video>')
             }
             $('#tambahData').modal('show');
         });
