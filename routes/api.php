@@ -54,5 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
     Route::post('/absensi/{id}',[APIAbsensiController::class,'absen']);
 
     Route::get('/nilai',[APINilaiController::class,'index']);
+    Route::get('/nilai-avg',[APINilaiController::class,'ratarata']);
 
 });
