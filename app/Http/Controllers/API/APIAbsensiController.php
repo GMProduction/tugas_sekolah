@@ -36,4 +36,11 @@ class APIAbsensiController extends Controller
         }
         return response()->json(['msg' => 'Absen tidak dapat dilakukan'],202);
     }
+
+    public function ratarata(){
+        $absensi      = Absensi::count('*');
+        $absensiSiswa = AbsensiSiswa::where('user_id', '=', Auth::id())->count('*');
+        $total        = ((double)$absensiSiswa / (double)$absensi) * 100;
+        return response()->json(['avg' => round($total,2)]);
+    }
 }
