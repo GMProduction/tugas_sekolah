@@ -14,7 +14,8 @@ class APIAbsensiController extends Controller
 
     public function index(){
         $absen = Absensi::with('absenku')->where('tanggal','=',date('Y-m-d',strtotime(now('Asia/Jakarta'))))->first();
-        return $absen;
+
+        return response()->json(['data' => $absen ?? null]);
     }
 
     public function absen($id){
