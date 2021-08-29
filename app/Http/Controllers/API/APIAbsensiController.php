@@ -39,8 +39,11 @@ class APIAbsensiController extends Controller
 
     public function ratarata(){
         $absensi      = Absensi::count('*');
-        $absensiSiswa = AbsensiSiswa::where('user_id', '=', Auth::id())->count('*');
-        $total        = ((double)$absensiSiswa / (double)$absensi) * 100;
+        $total = 0;
+        if ($absensi){
+            $absensiSiswa = AbsensiSiswa::where('user_id', '=', Auth::id())->count('*');
+            $total        = ((double)$absensiSiswa / (double)$absensi) * 100;
+        }
         return response()->json(['avg' => round($total,2)]);
     }
 }
