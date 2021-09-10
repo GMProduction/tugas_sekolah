@@ -50,13 +50,11 @@ class APIAktivitasController extends Controller
             if ($aktivitas){
                 $aktivitas->update($field);
                 Sholat::where('aktivitas_id','=',$aktivitas->id)->delete();
-
             }else{
                 $aktivitasTanggal = Aktivitas::where('user_id', '=', Auth::id())->select('tanggal')->latest()->first();
                 if ($aktivitasTanggal && $aktivitasTanggal['tanggal'] == date('Y-m-d', strtotime(now('Asia/Jakarta')))){
                     return response()->json(['msg' => 'Kamu sudah menambahkan aktifitas baru untuk hari ini']);
                 }
-
                 $aktivitas = Aktivitas::create($field);
             }
 
