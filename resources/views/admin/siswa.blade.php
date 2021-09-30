@@ -32,6 +32,7 @@
                     <th>#</th>
                     <th>NIS</th>
                     <th>Nama</th>
+                    <th>Kelas</th>
                     <th>Alamat</th>
                     <th>No Hp</th>
                     <th>Tanggal Lahir</th>
@@ -44,6 +45,7 @@
                         <td>{{$key+1}}</td>
                         <td>{{$d->username}}</td>
                         <td>{{$d->nama}}</td>
+                        <td>{{$d->kelas ? $d->kelas->nama : ''}}</td>
                         <td>{{$d->alamat}}</td>
                         <td>{{$d->no_hp}}
                         <td>{{$d->tanggal_lahir}}
@@ -121,6 +123,7 @@
 
                                     <div class="text-start p-4">
                                         <p class="mb-1 mt-3">Nama : <span id="nama"></span></p>
+                                        <p class="mb-1 mt-3">Kelas : <span id="kelas"></span></p>
                                         <p class="mb-1 ">Alamat : <span id="alamat"></span></p>
                                         <p class="mb-1 ">Tanggal Lahir : <span id="tanggal"></span></p>
                                         <p class="mb-1 " >No Hp : <span id="no_hp"></span></p>
@@ -208,6 +211,7 @@
             $.get('/admin/siswa/'+id, function (data) {
                 $('#imgProfile').attr('src', data['image'] ?? '{{asset('static-image/noimage.jpg')}}')
                 $('#nama').html(data['nama'] ?? '')
+                $('#kelas').html(data['kelas'] ? data['kelas']['nama'] : '')
                 $('#no_hp').html(data['no_hp'] ?? '')
                 $('#alamat').html(data['alamat'] ?? '')
                 $('#absensPersen').html(data['absensi']+' %')

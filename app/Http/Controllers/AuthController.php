@@ -72,6 +72,10 @@ class AuthController extends CustomController
             $user = User::find($user->id);
         }
 
+        if ($user->roles == 'user'){
+            $user->update(['id_kelas' => (int)$this->request->get('kelas')]);
+        }
+
         return $user;
     }
 

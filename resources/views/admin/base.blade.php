@@ -49,7 +49,12 @@
                     <span class="mx-2">Data Admin</span>
                 </li>
             </a>
-
+            <a href="/admin/kelas">
+                <li href="#" class="nav-link t-white">
+                    <i class='bx bx-user-voice'></i>
+                    <span class="mx-2">Data Kelas</span>
+                </li>
+            </a>
             <a href="/admin/guru">
                 <li href="#" class="nav-link t-white">
                     <i class='bx bxs-user-check'></i>

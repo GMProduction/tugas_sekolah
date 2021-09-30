@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Helper\CustomController;
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
 use App\Models\Nilai;
 use App\Models\Tugas;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class TugasController extends CustomController
         if (\request()->isMethod('POST')){
             $field = \request()->validate([
                 'nama' => 'required',
-                'deskripsi' => 'required'
+                'deskripsi' => 'required',
+                'id_kelas' => 'required'
             ]);
             Arr::set($field,'user_id', Auth::id());
             $img = $this->request->files->get('url_video');
@@ -44,8 +46,10 @@ class TugasController extends CustomController
 
             return response()->json('berhasil');
         }
-        $tugas = Tugas::where('user_id','=',Auth::id())->paginate(10);
-        return view('guru.tugas')->with(['data' => $tugas]);
+        $tugas = Tugas::with('kelas')->where('user_id','=',Auth::id())->paginate(10);
+        $kelas = Kelas::all();
+
+        return view('guru.tugas')->with(['data' => $tugas, 'kelas' => $kelas]);
     }
 
     public function detail($id){

@@ -26,7 +26,8 @@ class User extends Authenticatable
         'no_hp',
         'tanggal_lahir',
         'image',
-        'token'
+        'token',
+        'id_kelas'
     ];
 
     /**
@@ -50,5 +51,9 @@ class User extends Authenticatable
 
     public function aktivitas(){
         return $this->hasMany(Aktivitas::class, 'user_id');
+    }
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 }
