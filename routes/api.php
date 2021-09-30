@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\APIAbsensiController;
 use App\Http\Controllers\API\APIAktivitasController;
+use App\Http\Controllers\API\APIKelasController;
 use App\Http\Controllers\API\APIMateriController;
 use App\Http\Controllers\API\APINilaiController;
 use App\Http\Controllers\API\APIProfileController;
@@ -28,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'loginApp']);
+Route::get('/kelas', [APIKelasController::class,'kelas']);
 
 
 

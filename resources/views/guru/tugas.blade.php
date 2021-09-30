@@ -29,6 +29,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Tugas</th>
+                    <th>Kelas</th>
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
@@ -37,10 +38,11 @@
                     <tr>
                         <td>{{$key + 1}}</td>
                         <td>{{$d->nama}}</td>
+                        <td>{{$d->kelas ? $d->kelas->nama : ''}}</td>
                         <td>{{date('d F Y', strtotime($d->created_at))}}</td>
                         <td>
                             <a class="btn btn-success btn-sm" id="detailData" data-id="{{$d->id}}">Detail</a>
-                            <a class="btn btn-warning btn-sm" id="editData" data-deskripsi="{{$d->deskripsi}}" data-video="{{$d->url_video}}" data-id="{{$d->id}}" data-nama="{{$d->nama}}">Ubah
+                            <a class="btn btn-warning btn-sm" id="editData" data-deskripsi="{{$d->deskripsi}}" data-video="{{$d->url_video}}" data-id="{{$d->id}}" data-kelas="{{$d->id_kelas}}" data-nama="{{$d->nama}}">Ubah
                             </a>
                             <button type="button" class="btn btn-danger btn-sm" onclick="hapus('id', 'nama') ">hapus</button>
                         </td>
@@ -73,9 +75,18 @@
                                 <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="mb-3">
-                                <label for="url_video" class="form-label">Video</label>
-                                <input type="file" class="form-control" id="url_video" name="url_video" accept="video/*">
-                                <div id="showVideo" class="mt-2"></div>
+                                <label for="nama" class="form-label">Nama Kelas</label>
+                                <select class="form-select" id="kelas" name="id_kelas">
+                                    <option value="" selected disabled>Pilih Kelas</option>
+                                    @foreach($kelas as $d)
+                                        <option value="{{$d->id}}">{{$d->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="url_video" class="form-label">Gambar</label>
+                                <input type="file" class="form-control" id="url_video" name="url_video" accept="image/*">
+                                <div id="showImg"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Deskripsi</label>
@@ -85,7 +96,6 @@
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -167,11 +177,12 @@
             $('#tambahData #id').val($(this).data('id'));
             $('#tambahData #nama').val($(this).data('nama'));
             $('#tambahData #deskripsi').val($(this).data('deskripsi'));
+            $('#tambahData #kelas').val($(this).data('kelas'));
             $('#tambahData #url_video').val('').attr('required', '');
-
+            $('#tambahData #showImg').empty();
             if ($(this).data('id')) {
                 $('#tambahData #url_video').removeAttr('required');
-                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="'+window.location.origin+'' + $(this).data('video') + '"></video>')
+                $('#tambahData #showImg').html('<img class="mt-2" width="300" src="'+$(this).data('video')+'"/>')
             }
             $('#tambahData').modal('show');
         });

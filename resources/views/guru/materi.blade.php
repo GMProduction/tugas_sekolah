@@ -28,6 +28,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Materi</th>
+                    <th>Kelas</th>
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
@@ -36,9 +37,10 @@
                     <tr>
                         <td>{{$key + 1}}</td>
                         <td>{{$d->nama}}</td>
+                        <td>{{$d->kelas ? $d->kelas->nama : ''}}</td>
                         <td>{{date('d F Y', strtotime($d->created_at))}}</td>
                         <td>
-                            <a class="btn btn-warning btn-sm" id="editData" data-deskripsi="{{$d->deskripsi}}" data-video="{{$d->url_video}}" data-id="{{$d->id}}" data-nama="{{$d->nama}}">Ubah
+                            <a class="btn btn-warning btn-sm" id="editData" data-deskripsi="{{$d->deskripsi}}" data-video="{{$d->url_video}}" data-id="{{$d->id}}" data-kelas="{{$d->id_kelas}}" data-nama="{{$d->nama}}">Ubah
                             </a>
                             <button type="button" class="btn btn-danger btn-sm" onclick="hapus('{{$d->id}}', '{{$d->nama}}') ">hapus</button>
                         </td>
@@ -54,8 +56,6 @@
         </div>
 
 
-
-
         <!-- Modal Tambah-->
         <div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -69,8 +69,17 @@
                             @csrf
                             <input id="id" name="id" hidden>
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Nama materi</label>
+                                <label for="nama" class="form-label">Nama Materi</label>
                                 <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Kelas</label>
+                                <select class="form-select" id="kelas" name="id_kelas">
+                                    <option value="" selected disabled>Pilih Kelas</option>
+                                    @foreach($kelas as $d)
+                                        <option value="{{$d->id}}">{{$d->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="url_video" class="form-label">Video</label>
@@ -97,18 +106,19 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
         })
 
-        $(document).on('click','#addData, #editData', function () {
+        $(document).on('click', '#addData, #editData', function () {
             $('#tambahData #id').val($(this).data('id'));
             $('#tambahData #nama').val($(this).data('nama'));
             $('#tambahData #deskripsi').val($(this).data('deskripsi'));
-            $('#tambahData #url_video').val('').attr('required','');
-            if($(this).data('id')){
+            $('#tambahData #kelas').val($(this).data('kelas'));
+            $('#tambahData #url_video').val('').attr('required', '');
+            if ($(this).data('id')) {
                 $('#tambahData #url_video').removeAttr('required');
-                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="'+window.location.origin+''+$(this).data('video')+'"></video>')
+                $('#tambahData #showVideo').html('<video height="200px" controls autoplay><source id="gambar" src="' + window.location.origin + '' + $(this).data('video') + '"></video>')
             }
             $('#tambahData').modal('show');
         });
@@ -116,16 +126,19 @@
         function aftersave() {
 
         }
+
         $('#tambahData').on('hidden.bs.modal', function () {
             $('#tambahData #showVideo video').remove()
         });
+
         function saveMateri() {
-            saveData('Simpan Tugas','formTugas');
+            saveData('Simpan Tugas', 'formTugas');
             return false;
         }
+
         function hapus(id, name) {
-            deleteData(name,'/guru/materi/'+id+'/delete');
-           return false;
+            deleteData(name, '/guru/materi/' + id + '/delete');
+            return false;
         }
     </script>
 

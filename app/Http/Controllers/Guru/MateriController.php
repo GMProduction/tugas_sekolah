@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Helper\CustomController;
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
 use App\Models\Materi;
 use App\Models\Tugas;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class MateriController extends CustomController
         if (\request()->isMethod('POST')){
             $field = \request()->validate([
                 'nama' => 'required',
-                'deskripsi' => 'required'
+                'deskripsi' => 'required',
+                'id_kelas' => 'required'
             ]);
             Arr::set($field,'user_id', Auth::id());
             $img = $this->request->files->get('url_video');
@@ -44,8 +46,9 @@ class MateriController extends CustomController
 
             return response()->json('berhasil');
         }
-        $materi = Materi::where('user_id','=',Auth::id())->paginate(10);
-        return view('guru.materi')->with(['data' => $materi]);
+        $materi = Materi::with('kelas')->where('user_id','=',Auth::id())->paginate(10);
+        $kelas = Kelas::all();
+        return view('guru.materi')->with(['data' => $materi, 'kelas' => $kelas]);
     }
 
     public function delete($id){

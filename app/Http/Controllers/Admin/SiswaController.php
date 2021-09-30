@@ -40,7 +40,7 @@ class SiswaController extends Controller
 
     public function detail($id)
     {
-        $siswa        = User::with('aktivitas')->find($id);
+        $siswa        = User::with('aktivitas','kelas')->find($id);
         $absensi      = Absensi::count('*');
         $absensiSiswa = AbsensiSiswa::where('user_id', '=', $id)->count('*');
         $total        = ((double)$absensiSiswa / (double)$absensi) * 100;

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AbsensiController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminMiddleware;
@@ -49,6 +50,9 @@ Route::prefix('/admin')->middleware(AdminMiddleware::class)->group(function (){
 
     Route::get('/guru', [GuruController::class, 'index']);
     Route::post('/guru', [AuthController::class, 'register']);
+
+    Route::match(['post','get'],'/kelas', [KelasController::class, 'index']);
+    Route::get('/kelas/delete/{id}', [KelasController::class, 'delete']);
 
     Route::prefix('/siswa')->group(function (){
         Route::match(['POST','GET'],'/', [SiswaController::class, 'index']);

@@ -15,6 +15,7 @@ class Tugas extends Model
         'deskripsi',
         'url_video',
         'user_id',
+        'id_kelas'
     ];
 
     protected $with = 'guru';
@@ -25,5 +26,9 @@ class Tugas extends Model
 
     public function nilaiSiswa(){
         return $this->hasOne(Nilai::class, 'tugas_id')->where('user_id','=',Auth::id());
+    }
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 }
