@@ -46,7 +46,7 @@
                         <td>{{$d->tanggal_lahir}}
                         <td>
                             <a  class="btn btn-success btn-sm" id="editData" data-tanggal="{{$d->tanggal_lahir}}" data-username="{{$d->username}}" data-hp="{{$d->no_hp}}" data-alamat="{{$d->alamat}}" data-nama="{{$d->nama}}" data-id="{{$d->id}}">Ubah</a>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus('id', 'nama') ">hapus</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus('{{$d->id}}', '{{$d->nama}}') ">hapus</button>
                         </td>
                     </tr>
                 @empty
@@ -148,24 +148,12 @@
             saveData('Simpan data guru', 'form')
             return false;
         }
+        function after() {
+
+        }
 
         function hapus(id, name) {
-            swal({
-                title: "Menghapus data?",
-                text: "Apa kamu yakin, ingin menghapus data ?!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Berhasil Menghapus data!", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Data belum terhapus");
-                    }
-                });
+           deleteData(name, window.location.pathname+'/delete/'+id);
         }
     </script>
 

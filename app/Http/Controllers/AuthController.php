@@ -30,7 +30,6 @@ class AuthController extends CustomController
         );
 
         if (\request('id')) {
-
             $username = User::where([['username', '=', \request('username')], ['id', '!=', \request('id')]])->first();
             if ($username) {
                 return \request()->validate(
@@ -39,11 +38,11 @@ class AuthController extends CustomController
                     ]
                 );
             }
-
+            Arr::set($field, 'username', \request('username'));
             $user = User::find(\request('id'));
             if (strpos($fieldPassword['password'], '*') === false) {
                 $password = Hash::make($fieldPassword['password']);
-                Arr::add($field, 'password', $password);
+                Arr::set($field, 'password', $password);
             }
             $user->update($field);
             $user = User::find(\request('id'));

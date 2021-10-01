@@ -13,4 +13,9 @@ class GuruController extends Controller
         $guru = User::where('roles','=', 'guru')->paginate(10);
         return view('admin.guru')->with(['data' => $guru]);
     }
+
+    public function delete($id){
+        User::destroy($id);
+        return response('success');
+    }
 }

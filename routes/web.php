@@ -50,6 +50,7 @@ Route::prefix('/admin')->middleware(AdminMiddleware::class)->group(function (){
 
     Route::get('/guru', [GuruController::class, 'index']);
     Route::post('/guru', [AuthController::class, 'register']);
+    Route::get('/guru/delete/{id}', [GuruController::class, 'delete']);
 
     Route::match(['post','get'],'/kelas', [KelasController::class, 'index']);
     Route::get('/kelas/delete/{id}', [KelasController::class, 'delete']);
